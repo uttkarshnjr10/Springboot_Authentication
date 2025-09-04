@@ -15,7 +15,7 @@ and understanding the building blocks behind backend development.
 
 ---
 
-## 🛠 Current Experiments
+##  Current Experiments
 - User signup and login flow with JWT.
 - Password encryption with Spring Security.
 - Playing with `@RestController`, `@Service`, `@Repository`.
