@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,15 @@ import java.util.function.Function;
 @Service
 public class JwtUtil {
 
-    // step1: secret key (must be 32+ bytes)
-    private final Key SECRET_KEY = Keys.hmacShaKeyFor(
-            "mysecretkeymysecretkeymysecretkey1234".getBytes(StandardCharsets.UTF_8));
+    private final Key SECRET_KEY;
+    private final long jwtExpiration;
+
+    // step 1 JWT
+    public JwtUtil(@Value("${jwt.secret}") String secret,
+                   @Value("${jwt.expiration}") long jwtExpiration) {
+        this.SECRET_KEY = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        this.jwtExpiration = jwtExpiration;
+    }
 
     // step2: get username
     public String extractUsername(String token) {
@@ -63,8 +70,8 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hrs
-                .signWith(SECRET_KEY, SignatureAlgorithm.HS256) // ✅ fixed
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }
 
