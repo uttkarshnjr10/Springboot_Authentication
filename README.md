@@ -23,19 +23,6 @@ and understanding the building blocks behind backend development.
 
 ---
 
-##  Why This Repo?
-I wanted a **scratchpad** where I can try out things,  
-document mistakes, and build a stronger foundation in Spring Boot.
-
----
-
-##  Next on My List
-- Role-based authentication.
-- Refresh tokens.
-- Connecting with MySQL/Postgres.
-- Deploying a small Spring Boot app to the cloud.
-
----
 
 ##  Note
 This is **not** a polished project — it's just me being curious and learning step by step.  
